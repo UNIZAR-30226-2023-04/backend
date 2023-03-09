@@ -1,7 +1,7 @@
 /* AUTORES:  UNIZAR-30226-2023-04 - Grupo 04 Margaret Hamilton - Decibely
 * ASIGNATURA: Proyecto Software del Grado de Ingeniería en Informática
 *			  Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
-* FECHA: Octubre de 2022
+* FECHA: Marzo de 2023
 * DESCRIPCIÓN: Fichero principal
 */
 
