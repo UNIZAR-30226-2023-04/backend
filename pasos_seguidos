@@ -1,0 +1,42 @@
+npm init --yes 
+npm i express #PERMITE ESCRIBIR CODIGO DEL SERVIDOR DE FORMA RESUMIDA, facilita el trabajo
+npm i express mongoose ejs-mate connect-flash morgan passport passport-local bcrypt-nodejs
+
+#mongoose es el driver el mongoose
+#ejs-mate: motor de plantillas
+#connect-flash: para que continúe la sesión, envío de mensajes entre múltiples páginas
+#morgan: ver que piden las apps cliente
+#passport: permite la autenticación. Con google y facebook y tálides (NO SE ENSEÑA EN EL Vídeo)
+#passport-local: sin google, sólo local
+#bcrypt-nodejs: cifrar contraseñas
+
+npm i nodemon -D #ayuda a reiniciar el servidor, lo ayuda como dependencia de desarrollo con -D, no lo instalará con el resto de paquetes 13:23
+#//Nodemon, si hay cambios, se reinicia el servidor
+
+npm run dev #startea el index, pero si hay cambios lo reiniciaa de nuevo MUY CHULO (todo es culpa del NODEMON)
+
+
+#routes -> los urls de todas las paginides
+#database.js -> Conexión a BBDD
+#index.js -> arrancar el servidor
+#keys.js -> Los parámetros de la BBDD
+#models -> Modela los datos que tiene la BBDD
+#passport -> Autenticación
+
+#views --> tiene los html, en verdad son los ejs-mate (MOTOR DE PLANTILLAS)
+
+#usamos path en index.js para indicar el path sin usar la ruta absoluta
+
+#Hemos puesto app.use en index.js para que al poner / (pantalla principal) se redirija a ./routes/router
+
+#requerimos morgan en el index.js
+#Se usa morgan antes de app.use('/', './routes/router') porque actúa de middleware, antes de que se muestre la pantalla a los usuarios
+app.use(morgan('dev')) #sirve para mostrar en la consola peticiones GET POST de clientides
+
+#CREAMOS SIGNUP SIGNIN
+#GET Y POST SON LO MISMO: get manda datos por la URL y POST lo hace escondido, para no distrocionar nuestra URL amigable
+
+#En index.js usamos este comando (el de aquí abajo) para tratar los datos que recibimos del formulario. El extend es para no se qué de que no son imágenes (solo tecsto)
+app.use(express.urlencoded({extended: false}))
+
+#No realiza el POST

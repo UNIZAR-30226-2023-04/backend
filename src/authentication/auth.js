@@ -3,8 +3,8 @@
 *			  Escuela de Ingeniería y Arquitectura - Universidad de Zaragoza
 * FECHA: Marzo de 2023
 * DESCRIPCIÓN: Fichero para la autenticacion
-*/
-
+ 
+*/ 
 // -- MODULOS ---
 const passport = require('passport');  
 const LocalStrategy = require('passport-local').Strategy;

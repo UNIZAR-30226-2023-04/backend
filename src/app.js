@@ -14,7 +14,7 @@ const path = require('path')
 
 // ------- INICIALIZACIONES -------- */
 const app = express() // Servidor
-require('./databse') // Base de datos
+require('./database') // Base de datos
 
 /* ------- CONFIGURACIÓN -------- */
 
