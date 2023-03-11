@@ -22,9 +22,13 @@ const express = require('express');
 const engine = require('ejs-mate'); //MODULO DE PLANTILLAS (ES UN MOTOR)
 const path = require('path');
 const morgan = require('morgan');
+const passport = require('passport');
+const session = require('express-session');
 
+//Inicializaciones
 const app = express();
-
+require('./database/database');
+require('./authentication/auth');    //Para requerir la autenticación
 
 // settings
 app.set('views', path.join(__dirname, 'views')); //PATH devuelve la dirección de la carpeta donde estamos (src) en __dirname, y le concatenamos la carpeta views
@@ -36,6 +40,13 @@ app.set('port', process.env.PORT || 3000); //declaramos variable puerto, que si 
 //middlewares
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended: false}));
+app.use(session({   //Guarda los datos de sesión
+    secret: 'mysecretsession',
+    resave: false,
+    saveUninitialized: false //No requiere inicialización previa
+}))
+app.use(passport.initialize()); //Inicializa el passport
+app.use(passport.session());
 
 //Routes
 app.use('/', require('./routes/router')); //CADA VEZ QUE USER USA RUTA /, lo mandará por ./routes

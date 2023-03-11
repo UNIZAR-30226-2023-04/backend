@@ -7,27 +7,28 @@
 
 /* -- MODULOS */
 const mongoose = require ('mongoose')
-const encrpytator = require ('bcrypt-nodejs');
+const encryptor = require ('bcrypt-nodejs');
 const {Schema} = mongoose;
  
 /* -- TABLA -- */
 const userSchema = new Schema({
     email: String,
     nombre: String, 
-    contrasenya: String,
+    password: String,
 });
+
 
 /* -- METODOS -- */
 
 // Cifrar
-userSchema.methods.encrpytPassword = (password) =>{
-    return encrpytator.hashSync(password, encrpytator.genSaltSync(10))
+userSchema.methods.encrpytPassword = (password) =>{ //Devuelve la contraseña cifrada
+    return encryptor.hashSync(password, encryptor.genSaltSync(10)) //Ejecuta 10 veces el algoritmo de cifrado
 };
 
 //Comparar
-userSchema.methods.comparePassword =  (password) => {
-    return encrpytator.compareSync(password, this.password);
+userSchema.methods.comparePassword =  (password) => { //Para comparar las contraseñas con lo que hay guardado en la BBDD
+    return encryptor.compareSync(password, this.password); //T o F
 };
 
 // Exportar
-module.exports = mongoose.model('usuarios', userSchema)
+module.exports = mongoose.model('users', userSchema)

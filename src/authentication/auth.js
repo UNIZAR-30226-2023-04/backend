@@ -11,15 +11,32 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const User = require('../models/user')
 
+//Cuando se ejecuta el done (abajo), almacena el id del usuario. INFO que guarda el navegador
+//para no tener que logearse todo el rato
+passport.serializeUser((user, done) => {
+    done(null, user.id);
+});
+
+//Convierte lo que guarda el navegador (del usuario) en la web para el servidor. Hace consulta a base de datos
+//para buscar el usuario
+passport.deserializeUser(async (id, done) => {
+    const user = await User.findById(id);
+    done(null, user);
+});
+
+
+
 passport.use('auth', new LocalStrategy({
-    usernameField: 'email',
+    usernameField: 'nombre',
+    mailField: 'email',
     passwordField: 'password',
     passReqToCallback: true // Para poder recibir el nombre
 }, async (req,email,password, done) => {
     const user = new User() 
     user.email = email;
     user.nombre = nombre;
-    user.passwrod = passwrod;
-    await user.save() // Para guardar en la base de datos de forma sincrona
-    done(null,user);
+    user.password = password;
+    await user.save() // Esperar a que esta función asíncrona acabe, y luego sigue con la 
+    //siguiente línea, sino problemas de concurrencia (me lo estoy inventando) //VER async
+    done(null,user); //null --> error, y guarda el usuario
 }));

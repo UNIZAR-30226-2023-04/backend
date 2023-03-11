@@ -8,6 +8,7 @@
 // Modulo
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 /*  Pagina inicial */
 router.get('/', (req, res, next) => {   //LA PRIMERA PÁGINA QUE EL USER VISITA
@@ -19,17 +20,30 @@ router.get('/signin', (req, res, next) => {
     //res.render('signin')
 });
 router.post('/signin', (req, res, next) => {
-
+    
 });
 
 /* Registrarse */
 router.get('/signup', (req, res, next) => {         //ENVIA UNA VENTANA
     res.render('signup')
 });
-router.post('/signup', (req, res, next) => {        //SE DICE SI RUTA ES CORREECTA (SI USER EXISTE); CUANDO LE DAMOS AL BOTÓN
-    // console.log(req.body)
-    // res.send('recevied')
+
+router.post('/signup', passport.authenticate('auth', {
+    successRedirect: '/profile',    //Si ok --> a donde te lleva
+    failureRedirect: '/signup',
+    passReqToCallback: true
+}));
+// router.post('/signup', (req, res, next) => {        //SE DICE SI RUTA ES CORREECTA (SI USER EXISTE); CUANDO LE DAMOS AL BOTÓN
+//     console.log(req.body)        //Aquí se muestran los datos de formulario
+//     res.send('received')
+// });
+
+router.get('/profile', (req, res, next) => {
+    res.render('profile');
 });
+
+
+
 
 
 // Exportar 
