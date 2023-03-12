@@ -12,12 +12,12 @@ const passport = require('passport');
 
 /*  Pagina inicial */
 router.get('/', (req, res, next) => {   //LA PRIMERA PÁGINA QUE EL USER VISITA
-    res.render('../views/index') //COMO RESPUESTA, RENDERIZA LA VISTA DE VIEWS
+    res.render('index'); //COMO RESPUESTA, RENDERIZA LA VISTA DE VIEWS
 });
 
 /*  Inciar sesion */
 router.get('/signin', (req, res, next) => {
-    res.render('../views/signin');
+    res.render('signin');
 });
 router.post('/signin', passport.authenticate('auth', {
     successRedirect: '/profile',    //Si ok --> a donde te lleva
@@ -27,7 +27,7 @@ router.post('/signin', passport.authenticate('auth', {
 
 /* Registrarse */
 router.get('/signup', (req, res, next) => {         //ENVIA UNA VENTANA
-    res.render('../views/signup')
+    res.render('signup')
 });
 
 router.post('/signup', passport.authenticate('auth', {
