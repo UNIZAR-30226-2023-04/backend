@@ -9,6 +9,6 @@ const mongoose = require('mongoose'); // Driver de MongoDb para NodeJS
 const {mongodb} = require('./keys');
 
 // Conectamos la base de datos
-mongoose.connect(mongodb.URI, {})
+mongoose.connect(mongodb.URI, {useNewUrlParser: true})
     .then(db => console.log('Database is connected'))
-    .catch(db => console.error(err))
+    .catch(err => console.error(err))

@@ -8,29 +8,70 @@
 // Modulo
 const express = require('express');
 const router = express.Router();
-
+const passport = require('passport');
 
 /*  Pagina inicial */
-router.get('/', (req, res, next) => {
- res.render('../views/index')
+router.get('/', (req, res, next) => {   //LA PRIMERA PÁGINA QUE EL USER VISITA
+    res.render('../views/index') //COMO RESPUESTA, RENDERIZA LA VISTA DE VIEWS
 });
 
 /*  Inciar sesion */
-router.get('/login', (req, res, next) => {
-
+router.get('/signin', (req, res, next) => {
+    res.render('../views/signin');
 });
-router.post('/login', (req, res, next) => {
-
-});
+router.post('/signin', passport.authenticate('auth', {
+    successRedirect: '/profile',    //Si ok --> a donde te lleva
+    failureRedirect: '/signin',
+    passReqToCallback: true
+}));
 
 /* Registrarse */
-router.get('/signup', (req, res, next) => {
-    res.render('signup')
+router.get('/signup', (req, res, next) => {         //ENVIA UNA VENTANA
+    res.render('../views/signup')
 });
-router.post('/signup', (req, res, next) => {
-    console.log(req.body)
-    res.send('recevied')
+
+router.post('/signup', passport.authenticate('auth', {
+    successRedirect: '/profile',    //Si ok --> a donde te lleva
+    failureRedirect: '/signup',
+    passReqToCallback: true
+}));
+// router.post('/signup', (req, res, next) => {        //SE DICE SI RUTA ES CORREECTA (SI USER EXISTE); CUANDO LE DAMOS AL BOTÓN
+//     console.log(req.body)        //Aquí se muestran los datos de formulario
+//     res.send('received')
+// });
+
+/* Cerrar sesion */
+router.get('/logout', (req, res, nex) => {
+    req.logout();
+    res.redirect('/');
 });
+
+
+
+
+//Comprobar si el usuario esta autenticado (ejecutar en el get de cada pagina
+//que requiera haber hecho signin)
+function isAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/');
+}
+
+/* PAGINAS QUE REQUIEREN AUTENTICACION */
+//Comprobar que el usuario esta autenticado antes de acceder
+router.use((req, res, next) => {
+    isAuthenticated(req, res, next);
+    next();
+});
+
+
+/* Mostrar perfil */
+router.get('/profile', (req, res, next) => {
+    res.render('profile');
+});
+
+
 
 
 // Exportar 

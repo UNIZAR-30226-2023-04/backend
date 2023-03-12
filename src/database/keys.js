@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-    mongodb:{
-        URI: 'mongodb://localhost:27017/node-login-passport-local'
+    mongodb: {
+        URI: 'mongodb://127.0.0.1:27017/' //Dirección de la base de datos
     }
 }
